@@ -64,6 +64,8 @@ int main(int argc, char **argv) {
 		infinity::core::receive_element_t receiveElement;
 		while(!context->receive(&receiveElement));
 
+		sleep(2);
+
 		printf("Waiting for message 2(blocking)\n");
 		//infinity::core::receive_element_t receiveElement;
 		while(!context->receive(&receiveElement));
