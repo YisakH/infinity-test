@@ -65,6 +65,8 @@ int main(int argc, char **argv) {
 		while(!context->receive(&receiveElement));
 
 		printf("Message received\n");
+		printf("%s\n", buffer);
+
 		delete bufferToReadWrite;
 		delete bufferToReceive;
 
@@ -83,8 +85,8 @@ int main(int argc, char **argv) {
 
 		printf("Reading content from remote buffer\n");
 		infinity::requests::RequestToken requestToken(context);
-		qp->read(buffer1Sided, remoteBufferToken, &requestToken);
-		requestToken.waitUntilCompleted();
+		//qp->read(buffer1Sided, remoteBufferToken, &requestToken);
+		//requestToken.waitUntilCompleted();
 
 		printf("Writing content to remote buffer\n");
 		qp->write(buffer1Sided, remoteBufferToken, &requestToken);
