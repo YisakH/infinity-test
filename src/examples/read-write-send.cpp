@@ -60,7 +60,11 @@ int main(int argc, char **argv) {
 		qpFactory->bindToPort(PORT_NUMBER);
 		qp = qpFactory->acceptIncomingConnection(bufferToken, sizeof(infinity::memory::RegionToken));
 
-		printf("Waiting for message (blocking)\n");
+		printf("Waiting for message 1(blocking)\n");
+		infinity::core::receive_element_t receiveElement;
+		while(!context->receive(&receiveElement));
+
+		printf("Waiting for message 2(blocking)\n");
 		infinity::core::receive_element_t receiveElement;
 		while(!context->receive(&receiveElement));
 
@@ -93,6 +97,10 @@ int main(int argc, char **argv) {
 		requestToken.waitUntilCompleted();
 
 		printf("Sending message to remote host\n");
+		qp->send(buffer2Sided, &requestToken);
+		requestToken.waitUntilCompleted();
+
+		printf("Sending message to remote host2\n");
 		qp->send(buffer2Sided, &requestToken);
 		requestToken.waitUntilCompleted();
 
