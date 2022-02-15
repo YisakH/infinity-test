@@ -46,14 +46,14 @@ int main(int argc, char **argv) {
 	infinity::queues::QueuePair *qp;
 
 	if(isServer) {
-		
+		char buffer[1024];// = "hello World!!";
 
 		printf("Creating buffers to read from and write to\n");
-		infinity::memory::Buffer *bufferToReadWrite = new infinity::memory::Buffer(context, 128 * sizeof(char));
+		infinity::memory::Buffer *bufferToReadWrite = new infinity::memory::Buffer(context, buffer, 1024 * sizeof(char));
 		infinity::memory::RegionToken *bufferToken = bufferToReadWrite->createRegionToken();
 
 		printf("Creating buffers to receive a message\n");
-		infinity::memory::Buffer *bufferToReceive = new infinity::memory::Buffer(context, 128 * sizeof(char));
+		infinity::memory::Buffer *bufferToReceive = new infinity::memory::Buffer(context, buffer, 1024 * sizeof(char));
 		context->postReceiveBuffer(bufferToReceive);
 
 		printf("Setting up connection (blocking)\n");
@@ -69,6 +69,8 @@ int main(int argc, char **argv) {
 		delete bufferToReceive;
 
 	} else {
+		char buffer[1024] = "Hello World!!";
+
 
 		printf("Connecting to remote node\n");
 		qp = qpFactory->connectToRemoteHost(SERVER_IP, PORT_NUMBER);
@@ -76,8 +78,8 @@ int main(int argc, char **argv) {
 
 
 		printf("Creating buffers\n");
-		infinity::memory::Buffer *buffer1Sided = new infinity::memory::Buffer(context, 128 * sizeof(char));
-		infinity::memory::Buffer *buffer2Sided = new infinity::memory::Buffer(context, 128 * sizeof(char));
+		infinity::memory::Buffer *buffer1Sided = new infinity::memory::Buffer(context, buffer, 1024 * sizeof(char));
+		infinity::memory::Buffer *buffer2Sided = new infinity::memory::Buffer(context, buffer, 1024 * sizeof(char));
 
 		printf("Reading content from remote buffer\n");
 		infinity::requests::RequestToken requestToken(context);
